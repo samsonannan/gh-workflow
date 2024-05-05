@@ -23,6 +23,7 @@ jobs:
 
       - name: Check issue requirements
         run: |
+          echo "Issue URL - ${{ github.event.pull_request.issue_url }}"
           # Get the PR number
           PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
 
