@@ -43,5 +43,5 @@ jobs:
             echo "::error::Pull request must be associated with the following labels: ${MISSING_LABELS[@]}"
             exit 1
           else
-            echo "All required labels are present"
+            echo "All required labels are present."
           fi
