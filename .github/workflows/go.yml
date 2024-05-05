@@ -23,9 +23,10 @@ jobs:
 
       - name: Check issue requirements
         run: |
-          cat $GITHUB_EVENT_PATH
           # Get the PR number
           PR_NUMBER=${{ github.event.number }}
+
+          echo "PR_NUMBER - ${PR_NUMBER}"
 
           # Get the issue number associated with the PR
           ISSUE_NUMBER=$(jq --raw-output .pull_request.body "$GITHUB_EVENT_PATH" | grep -oP '\b(?:issue|#)\s*([0-9]+)\b' | awk '{print $2}')
