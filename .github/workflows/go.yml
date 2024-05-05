@@ -23,6 +23,7 @@ jobs:
 
       - name: Check issue requirements
         run: |
+          cat $GITHUB_EVENT_PATH
           # Get the PR number
           PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
 
