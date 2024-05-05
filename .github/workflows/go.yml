@@ -1,7 +1,8 @@
 name: Pull Request Checks
 on:
   pull_request:
-    types: [opened, edited]
+    branches:
+      - "*"
 
 jobs:
   check-issue-requirements:
