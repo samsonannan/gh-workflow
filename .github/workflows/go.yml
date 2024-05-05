@@ -1,7 +1,8 @@
 name: Pull Request Checks
 on:
   pull_request:
-    types: [opened]
+    branches:
+      - "*"
 
 jobs:
   check-issue-requirements:
@@ -15,22 +16,26 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.x'
+          python-version: "3.x"
 
       - name: Install dependencies
         run: pip install -r requirements.txt
 
       - name: Check issue requirements
         run: |
+          echo ${{ github.event.pull_request.issue_url }}
+
           # Get the PR number
-          PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
-          
+          PR_NUMBER=${{ github.event.number }}
+
+          echo "PR_NUMBER - ${PR_NUMBER}"
+
           # Get the issue number associated with the PR
           ISSUE_NUMBER=$(jq --raw-output .pull_request.body "$GITHUB_EVENT_PATH" | grep -oP '\b(?:issue|#)\s*([0-9]+)\b' | awk '{print $2}')
-          
+
           # Get all labels associated with the issue
           ISSUE_LABELS=$(curl -s "https://api.github.com/repos/${{ github.repository }}/issues/${ISSUE_NUMBER}/labels" | jq --raw-output '.[].name')
-          
+
           # Check if all required labels are present
           REQUIRED_LABELS=("bug" "feature" "documentation") # Add your required labels here
           MISSING_LABELS=()
@@ -39,12 +44,12 @@ jobs:
               MISSING_LABELS+=("$LABEL")
             fi
           done
-          
+
           # If there are missing labels, fail the check and provide feedback
           if [ ${#MISSING_LABELS[@]} -ne 0 ]; then
             echo "Missing required labels: ${MISSING_LABELS[@]}"
             echo "::error::Pull request must be associated with the following labels: ${MISSING_LABELS[@]}"
             exit 1
           else
-            echo "All required labels are present"
+            echo "All required labels are present."
           fi
