@@ -23,6 +23,8 @@ jobs:
 
       - name: Check issue requirements
         run: |
+          cat ${{ github.event }}
+
           # Get the PR number
           PR_NUMBER=${{ github.event.number }}
 
