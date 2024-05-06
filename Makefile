@@ -56,8 +56,8 @@ protos: check-scripts($(PROTO_SCRIPT))
 	@if [ -f "$(PROTO_SCRIPT)" ]; then \
 		sudo apt install -y protobuf-compiler; \
 		go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest; \
-		protoc --version
-		protoc-gen-go-grpc --version
+		protoc --version; \
+		protoc-gen-go-grpc --version; \
 		# (protoc \
 		# 	--proto_path=./protos \
 		# 	--go_out=./common/grpc \
