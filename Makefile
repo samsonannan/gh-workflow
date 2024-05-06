@@ -55,13 +55,21 @@ generate: protos mocks
 
 protos: check-scripts($(PROTO_SCRIPT))
 	@echo "Generating Protobuf files..."
-	@chmod +x $(PROTO_SCRIPT)
-	@$(PROTO_SCRIPT)
+	@if [ -f "$(PROTO_SCRIPT)" ]; then \
+		chmod +x $(PROTO_SCRIPT); \
+		$(PROTO_SCRIPT); \
+	else \
+		echo "Proto script not found. Skipping protobufs generation."; \
+	fi
 
 mocks: check-scripts($(MOCK_SCRIPT))
 	@echo "Generating mocks..."
-	@chmod +x $(MOCK_SCRIPT)
-	@$(MOCK_SCRIPT)
+	@if [ -f "$(MOCK_SCRIPT)" ]; then \
+		chmod +x $(MOCK_SCRIPT); \
+		$(MOCK_SCRIPT); \
+	else \
+		echo "Mock script not found. Skipping mock generation."; \
+	fi
 
 check-scripts-%:
 	@if [ ! -f "$*" ]; then \
