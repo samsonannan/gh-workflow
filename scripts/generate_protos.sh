@@ -1,5 +1,5 @@
 # Add the Go binary directory to PATH
-export GOBIN=$(go env GOPATH)/bin
+export GOBIN=$(go env GOPATH)
 
 # Check if protoc-gen-go is installed
 if ! command -v protoc-gen-go &> /dev/null; then
@@ -14,6 +14,4 @@ if ! command -v protoc-gen-go &> /dev/null; then
     echo "installed protoc-gen-go"
 fi
 
-cd /home/runner/go/gin
-ls -al
 protoc --version
