@@ -61,7 +61,7 @@ staticcheck: check-staticcheck
 check-staticcheck:
 	@if ! command -v staticcheck &> /dev/null; then \
 		echo "staticcheck is not installed. Installing..."; \
-		go install honnef.co/go/tools/cmd/staticcheck@latest; \
+		go install honnef.co/go/tools/cmd/staticcheck@2020.2.1; \
 		if [ $$? -eq 1 ]; then \
 			echo "Staticcheck installed successfully."; \
 		else \
