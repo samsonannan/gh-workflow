@@ -55,6 +55,7 @@ protos: check-scripts($(PROTO_SCRIPT))
 	@echo "Generating Protobuf files..."; \
 	sudo apt install -y protobuf-compiler
 	protoc --version
+	protoc-gen-go-grpc --version
 	# @if [ -f "$(PROTO_SCRIPT)" ]; then \
 	# 	chmod +x $(PROTO_SCRIPT); \
 	# 	$(PROTO_SCRIPT); \
