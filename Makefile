@@ -46,22 +46,22 @@ check-lint:
     fi
 
 gofmt:
-    @echo "Applying gofmt to all Go files..."
-    @gofmt -s -w $(shell find . -type f -name '*.go' -not -path './vendor/*')
+	@echo "Applying gofmt to all Go files..."
+	@gofmt -s -w $(shell find . -type f -name '*.go' -not -path './vendor/*')
 
 staticcheck:
-    @echo "Running staticcheck..."
-    @staticcheck ./...
+	@echo "Running staticcheck..."
+	@staticcheck ./...
 
 generate: protos mocks
 
 protos: check-scripts($(PROTO_SCRIPT))
-    @echo "Generating Protobuf files..."
-    @$(PROTO_SCRIPT)
+	@echo "Generating Protobuf files..."
+	@$(PROTO_SCRIPT)
 
 mocks: check-scripts($(MOCK_SCRIPT))
-    @echo "Generating mocks..."
-    @$(MOCK_SCRIPT)
+	@echo "Generating mocks..."
+	@$(MOCK_SCRIPT)
 
 check-scripts(%):
 	@if [ ! -f "$($*)" ]; then \
