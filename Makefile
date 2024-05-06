@@ -74,7 +74,7 @@ go_mod_tidy:
 		echo "go mod tidy in $${dir}"; \
 		(cd "$${dir}" && \
 		go get -u ./... && \
-		go mod tidy -compat=$(GO_VERSION)); \
+		go mod tidy -compat=1.21); \
 	done
 
 build-all:
