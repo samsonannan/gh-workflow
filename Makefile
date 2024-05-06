@@ -53,7 +53,7 @@ generate: protos mocks
 
 protos: check-scripts($(PROTO_SCRIPT))
 	@echo "Generating Protobuf files..."; \
-	go install google.golang.org/protobuf/cmd/protoc-gen-go@latest; \
+	sudo apt install -y protobuf-compiler
 	protoc --version
 	# @if [ -f "$(PROTO_SCRIPT)" ]; then \
 	# 	chmod +x $(PROTO_SCRIPT); \
