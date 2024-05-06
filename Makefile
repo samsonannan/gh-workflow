@@ -55,8 +55,19 @@ protos: check-scripts($(PROTO_SCRIPT))
 	@echo "Generating Protobuf files..."
 	@if [ -f "$(PROTO_SCRIPT)" ]; then \
 		sudo apt install -y protobuf-compiler; \
-		chmod +x $(PROTO_SCRIPT); \
-		$(PROTO_SCRIPT); \
+		go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest; \
+		protoc --version
+		protoc-gen-go-grpc --version
+		# (protoc \
+		# 	--proto_path=./protos \
+		# 	--go_out=./common/grpc \
+		# 	--go_opt=paths=source_relative \
+		# 	--go-grpc_out=./common/grpc \
+		# 	--go-grpc_opt=paths=source_relative \
+		# 		protos/engine/engine.proto \
+		# 		protos/integrator/integrator.proto \
+		# 		protos/rng/rng.proto \
+		# 		protos/persistor/persistor.proto); \
 	else \
 		echo "Proto script not found. Skipping protobufs generation."; \
 	fi
