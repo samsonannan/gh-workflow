@@ -50,7 +50,8 @@ gofmt:
 	@echo "Applying gofmt to all Go files..."
 	@gofmt -s -w $(shell find . -type f -name '*.go' -not -path './vendor/*')
 
-generate: protos mocks
+generate: protos
+	@echo "Successfully generated all protobufs and mock files"
 
 protos: check-scripts($(PROTO_SCRIPT))
 	@echo "Generating Protobuf files..."

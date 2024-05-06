@@ -25,8 +25,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      #   - name: Generate
-      #     run: make generate
+      - name: Generate
+        run: make generate
 
       - name: Test
         env:
