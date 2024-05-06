@@ -26,9 +26,9 @@ test: lint gofmt
 		echo "go test in $${dir}"; \
 		(cd "$${dir}" && \
 			go mod tidy -compat=$(GO_VERSION) && \
-			go test ./... && \
-			go test ./... -short -race && \
-			go test ./... -run=NONE -bench=. -benchmem && \
+			go test -v ./... && \
+			go test -v ./... -short -race && \
+			go test -v ./... -run=NONE -bench=. -benchmem && \
 			env GOOS=linux GOARCH=386 go test ./... && \
 			go vet ./...); \
     done
