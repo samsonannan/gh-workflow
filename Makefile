@@ -52,9 +52,9 @@ generate: protos mocks
 	@echo "Successfully generated all protobufs and mock files"
 
 protos: check-scripts($(PROTO_SCRIPT))
-	@echo "Generating Protobuf files..."
+	@echo "Generating Protobuf files..."; \
 	go install google.golang.org/protobuf/cmd/protoc-gen-go@latest; \
-	which protoc
+	protoc --version
 	# @if [ -f "$(PROTO_SCRIPT)" ]; then \
 	# 	chmod +x $(PROTO_SCRIPT); \
 	# 	$(PROTO_SCRIPT); \
