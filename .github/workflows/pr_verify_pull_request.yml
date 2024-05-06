@@ -1,11 +1,11 @@
-name: Pull Request Checks
+name: Verify PR Requirements
 on:
   pull_request:
     types: [edited, synchronize, opened, reopened]
 
 jobs:
   check-pr-requirements:
-    name: Check Issue Requirements
+    name: Ensure PR Meets Requirements
     runs-on: ubuntu-latest
 
     steps:
@@ -24,9 +24,14 @@ jobs:
         run: |
           title="${{ github.event.pull_request.title }}"
           if [[ $title =~ [[:punct:]] ]]; then
-            echo "Pull request title contains punctuation."
+              echo "Pull request title contains punctuation."
+              exit 1
+          fi
+
+      - name: Check PR Assignee
+        run: |
+          assignee="${{ github.event.pull_request.assignee }}"
+          if [ -z "$assignee" ]; then
+            echo "Pull request is not assigned to anyone."
             exit 1
-          else
-            echo "Pull request title does not contain punctuation."
-            exit 0
           fi
