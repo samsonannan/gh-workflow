@@ -26,10 +26,10 @@ test: lint gofmt
 		echo "go test in $${dir}"; \
 		(cd "$${dir}" && \
 			go mod tidy -compat=1.21 && \
-			go test && \
+			go test ./... && \
 			go test ./... -short -race && \
 			go test ./... -run=NONE -bench=. -benchmem && \
-			env GOOS=linux GOARCH=386 go test && \
+			env GOOS=linux GOARCH=386 go test ./... && \
 			go vet); \
     done
 
