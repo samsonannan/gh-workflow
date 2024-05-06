@@ -64,7 +64,7 @@ check-staticcheck:
 		GO111MODULE=on go install honnef.co/go/tools/cmd/staticcheck@latest; \
 		if [ $$? -eq 0 ]; then \
 			echo "Staticcheck installed successfully."; \
-			echo $(shell which staticcheck)
+			echo $(shell which staticcheck); \
 		else \
 			echo "Error: Failed to install Staticcheck."; \
 			exit 1; \
