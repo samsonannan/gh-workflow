@@ -25,7 +25,7 @@ test: lint gofmt
 		fi; \
 		echo "go test in $${dir}"; \
 		(cd "$${dir}" && \
-			go mod tidy -compat=$(GO_VERSION) && \
+			go mod tidy -compat=1.21 && \
 			go test && \
 			go test ./... -short -race && \
 			go test ./... -run=NONE -bench=. -benchmem && \
