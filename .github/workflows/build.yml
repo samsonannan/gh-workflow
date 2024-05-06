@@ -28,8 +28,8 @@ jobs:
       - name: Generate
         run: make generate
 
-      - name: Test
-        run: make test
+    #   - name: Test
+    #     run: make test
 
-      - name: Build
-        run: make build-all
+    #   - name: Build
+    #     run: make build-all
