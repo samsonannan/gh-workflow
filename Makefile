@@ -57,7 +57,9 @@ protos: check-scripts($(PROTO_SCRIPT))
 		export PATH=/usr/bin:$(PATH); \
 		source ~/.bashrc; \
 		sudo apt install -y protobuf-compiler; \
+		go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
 		go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest; \
+		sudo mv /home/runner/go/bin/protoc-gen-go /usr/bin/; \
 		sudo mv /home/runner/go/bin/protoc-gen-go-grpc /usr/bin/; \
 		which protoc; \
 		which protoc-gen-go-grpc; \
