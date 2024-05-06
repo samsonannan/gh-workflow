@@ -33,5 +33,5 @@ jobs:
           GOVERSION: ${{ matrix.go-version }}
         run: make test
 
-    #   - name: Build
-    #     run: make build-all
+      - name: Build
+        run: make build-all
