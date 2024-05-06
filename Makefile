@@ -40,9 +40,9 @@ lint: check-lint gofmt staticcheck
 	done
 
 check-lint:
-    @if ! command -v $(LINT_TOOL) &> /dev/null; then \
-        echo "golangci-lint is not installed. Installing..."; \
-        GO111MODULE=on go get github.com/golangci/golangci-lint/cmd/golangci-lint@latest; \
+	@if ! command -v $(LINT_TOOL) &> /dev/null; then \
+		echo "golangci-lint is not installed. Installing..."; \
+		GO111MODULE=on go get github.com/golangci/golangci-lint/cmd/golangci-lint@latest; \
     fi
 
 gofmt:
@@ -64,10 +64,10 @@ mocks: check-scripts($(MOCK_SCRIPT))
     @$(MOCK_SCRIPT)
 
 check-scripts(%):
-    @if [ ! -f "$($*)" ]; then \
-        echo "Error: $($*) not found."; \
-        exit 1; \
-    fi
+	@if [ ! -f "$($*)" ]; then \
+		echo "Error: $($*) not found."; \
+		exit 1; \
+	fi
 
 bench: testdeps
 	go test ./... -test.run=NONE -test.bench=. -test.benchmem
