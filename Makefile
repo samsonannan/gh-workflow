@@ -54,6 +54,7 @@ generate: protos mocks
 protos: check-scripts($(PROTO_SCRIPT))
 	@echo "Generating Protobuf files..."; \
 	sudo apt install -y protobuf-compiler; \
+	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest; \
 	protoc --version; \
 	protoc-gen-go-grpc --version; \
 	# @if [ -f "$(PROTO_SCRIPT)" ]; then \
