@@ -52,17 +52,14 @@ generate: protos mocks
 	@echo "Successfully generated all protobufs and mock files"
 
 protos: check-scripts($(PROTO_SCRIPT))
-	@echo "Generating Protobuf files..."; \
-	sudo apt install -y protobuf-compiler; \
-	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest; \
-	protoc --version; \
-	protoc-gen-go-grpc --version; \
-	# @if [ -f "$(PROTO_SCRIPT)" ]; then \
-	# 	chmod +x $(PROTO_SCRIPT); \
-	# 	$(PROTO_SCRIPT); \
-	# else \
-	# 	echo "Proto script not found. Skipping protobufs generation."; \
-	# fi
+	@echo "Generating Protobuf files..."
+	@if [ -f "$(PROTO_SCRIPT)" ]; then \
+		sudo apt install -y protobuf-compiler; \
+		chmod +x $(PROTO_SCRIPT); \
+		$(PROTO_SCRIPT); \
+	else \
+		echo "Proto script not found. Skipping protobufs generation."; \
+	fi
 
 mocks: check-scripts($(MOCK_SCRIPT))
 	@echo "Generating mocks..."
