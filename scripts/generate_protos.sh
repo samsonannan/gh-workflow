@@ -1,5 +1,5 @@
 # Add the Go binary directory to PATH
-export PATH=$PATH:$(go env GOPATH)/bin
+export GOBIN=$(go env GOPATH)/bin
 
 # Check if protoc-gen-go is installed
 if ! command -v protoc-gen-go &> /dev/null; then
