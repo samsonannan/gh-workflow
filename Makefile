@@ -62,6 +62,7 @@ mocks: check-scripts($(MOCK_SCRIPT))
 	@$(MOCK_SCRIPT)
 
 check-scripts(%):
+	@echo $($*)
 	@if [ ! -f "$($*)" ]; then \
 		echo "Error: $($*) not found."; \
 		exit 1; \
