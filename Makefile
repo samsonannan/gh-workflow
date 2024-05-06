@@ -49,11 +49,17 @@ gofmt:
 	@echo "Applying gofmt to all Go files..."
 	@gofmt -s -w $(shell find . -type f -name '*.go' -not -path './vendor/*')
 
-staticcheck:
+staticcheck: check-staticcheck
 	@echo "Running staticcheck..."
 	set -e; for dir in $(GO_MOD_DIRS); do \
 		staticcheck ./...; \
 	done
+
+check-staticcheck:
+	@if ! command -v staticcheck &> /dev/null; then \
+		echo "staticcheck is not installed. Installing..."; \
+		GO111MODULE=on go install honnef.co/go/tools/cmd/staticcheck@latest; \
+	fi
 
 generate: protos mocks
 
