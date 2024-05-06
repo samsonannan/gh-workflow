@@ -81,7 +81,8 @@ go_mod_tidy:
 	done
 
 build-all:
-	@ifeq ($(DOCKER_RUNNING),1)
+	@echo $(DOCKER_RUNNING)
+	ifeq ($(DOCKER_RUNNING), 1)
 		@chmod +x $(BUILD_SCRIPT)
 		@$(BUILD_SCRIPT)
 	else
