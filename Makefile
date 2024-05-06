@@ -42,7 +42,7 @@ lint: check-lint
 check-lint:
 	@if ! command -v $(LINT_TOOL) &> /dev/null; then \
 		echo "golangci-lint is not installed. Installing..."; \
-		GO111MODULE=on go get github.com/golangci/golangci-lint/cmd/golangci-lint@latest; \
+		GO111MODULE=on go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest; \
     fi
 
 gofmt:
