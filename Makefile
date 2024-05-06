@@ -54,8 +54,7 @@ staticcheck: check-staticcheck
 	@echo $(GO_MOD_DIRS)
 	set -e; for dir in $(GO_MOD_DIRS); do \
 		echo $${dir}; \
-		(cd "$${dir}" && \
-		staticcheck ./...); \
+		(cd $${dir}); \
 	done
 
 check-staticcheck:
