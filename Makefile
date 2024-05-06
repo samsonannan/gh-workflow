@@ -52,7 +52,7 @@ gofmt:
 staticcheck: check-staticcheck
 	@echo "Running staticcheck..."
 	set -e; for dir in $(GO_MOD_DIRS); do \
-		staticcheck ./...; \
+		cd "$${dir}" && staticcheck ./...; \
 	done
 
 check-staticcheck:
