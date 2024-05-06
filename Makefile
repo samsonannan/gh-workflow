@@ -53,6 +53,7 @@ staticcheck: check-staticcheck
 	@echo "Running staticcheck..."
 	@echo $(GO_MOD_DIRS)
 	set -e; for dir in $(GO_MOD_DIRS); do \
+		echo $${dir}; \
 		(cd "$${dir}" && \
 		staticcheck ./...); \
 	done
