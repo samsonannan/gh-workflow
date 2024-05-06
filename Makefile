@@ -61,10 +61,9 @@ staticcheck: check-staticcheck
 check-staticcheck:
 	@if ! command -v staticcheck &> /dev/null; then \
 		echo "staticcheck is not installed. Installing..."; \
-		GO111MODULE=on go install honnef.co/go/tools/cmd/staticcheck@latest; \
+		STATICCHECK_PATH=$$(GO111MODULE=on go install honnef.co/go/tools/cmd/staticcheck@latest 2>&1); \
 		if [ $$? -eq 0 ]; then \
-			echo "Staticcheck installed successfully."; \
-			echo $(shell staticcheck --help); \
+			echo "Staticcheck installed successfully at: $$STATICCHECK_PATH"; \
 		else \
 			echo "Error: Failed to install Staticcheck."; \
 			exit 1; \
