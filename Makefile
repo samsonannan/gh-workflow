@@ -36,7 +36,8 @@ test: lint
 lint: check-lint
 	set -e; for dir in $(GO_MOD_DIRS); do \
 		echo "Running golangci-lint in $${dir}"; \
-		golangci-lint run "$${dir}"; \
+		(cd "$${dir}" && \
+		golangci-lint run ./...); \
 	done
 
 check-lint:
