@@ -17,21 +17,32 @@ jobs:
         with:
           python-version: "3.x"
 
-      #   - name: Install dependencies
-      #     run: pip install -r requirements.txt
+      - name: Install dependencies
+        run: pip install -r requirements.txt
 
       - name: Check PR Header
         run: |
           title="${{ github.event.pull_request.title }}"
-          if [[ $title =~ [[:punct:]] ]]; then
-              echo "Pull request title contains punctuation."
-              exit 1
-          fi
+            if [[ $title =~ [[:punct:]] ]]; then
+                echo "Pull request title contains punctuation."
+                exit 1
+            fi
 
       - name: Check PR Assignee
         run: |
           assignee="${{ github.event.pull_request.assignee }}"
           if [ -z "$assignee" ]; then
-            echo "Pull request is not assigned to anyone."
-            exit 1
+              echo "Pull request is not assigned to anyone."
+              exit 1
+          fi
+
+      - name: Check PR Labels
+        run: |
+          labels=$(jq --raw-output .pull_request.labels[].name $GITHUB_EVENT_PATH)
+          if [ -z "$labels" ]; then
+              echo "Pull request does not have any labels assigned."
+              exit 1
+          elif ! echo "$labels" | grep -qE "minor|major"; then
+              echo "Pull request must have at least one label, which should be 'minor' or 'major'."
+              exit 1
           fi
