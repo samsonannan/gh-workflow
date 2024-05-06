@@ -52,7 +52,7 @@ gofmt:
 staticcheck:
 	@echo "Running staticcheck..."
 	set -e; for dir in $(GO_MOD_DIRS); do \
-		staticcheck ./...
+		staticcheck ./...; \
 	done
 
 generate: protos mocks
