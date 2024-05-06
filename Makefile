@@ -8,8 +8,6 @@ BUILD_SCRIPT := ./scripts/build/build-all.sh
 
 DOCKER_RUNNING ?= $(shell docker ps >/dev/null 2>&1 && echo 1 || echo 0)
 
-GO_VERSION := $(shell go version)
-
 .PHONY: lint gofmt generate protos mocks
 
 test: lint gofmt
@@ -25,7 +23,7 @@ test: lint gofmt
 		fi; \
 		echo "go test in $${dir}"; \
 		(cd "$${dir}" && \
-			go mod tidy -compat=1.21 && \
+			go mod tidy -compat=$(GOVERSION) && \
 			go test ./... && \
 			go test ./... -short -race && \
 			go test ./... -run=NONE -bench=. -benchmem && \
@@ -74,7 +72,7 @@ go_mod_tidy:
 		echo "go mod tidy in $${dir}"; \
 		(cd "$${dir}" && \
 		go get -u ./... && \
-		go mod tidy -compat=1.21); \
+		go mod tidy -compat=$(GOVERSION)); \
 	done
 
 build-all:
