@@ -61,8 +61,8 @@ check-staticcheck:
 	@if ! command -v staticcheck &> /dev/null; then \
 		echo "staticcheck is not installed. Installing..."; \
 		# STATICCHECK_PATH=$$(GO111MODULE=on go get honnef.co/go/tools/cmd/staticcheck@latest 2>&1); \
-		apt install staticcheck
-		echo $(shell staticcheck --version)
+		apt install staticcheck; \
+		echo $(shell staticcheck --version); \
 	fi
 
 generate: protos mocks
