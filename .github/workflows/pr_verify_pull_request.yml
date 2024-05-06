@@ -23,10 +23,20 @@ jobs:
       - name: Check PR Header
         run: |
           title="${{ github.event.pull_request.title }}"
-            if [[ $title =~ [[:punct:]] ]]; then
-                echo "Pull request title contains punctuation."
-                exit 1
-            fi
+          if [[ $title =~ [[:punct:]] ]]; then
+             echo "Pull request title contains punctuation."
+             exit 1
+          fi
+
+      - name: Lint PR Header
+        uses: morrisoncole/pr-lint-action@51f3cfabaf5d46f94e54524214e45685f0401b2a
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          title-regex: "^[A-Z]\\w+[^s] .*[^.?!,\\-;:]$"
+          on-failed-regex-fail-action: true
+          on-failed-regex-create-review: false
+          on-failed-regex-request-changes: false
+          on-failed-regex-comment: "PR titles must start with a capital letter, not end the first word in 's' (ideally the imperative, present tense!), and not end with punctuation."
 
       - name: Check PR Assignee
         run: |
@@ -40,9 +50,9 @@ jobs:
         run: |
           labels=$(jq --raw-output .pull_request.labels[].name $GITHUB_EVENT_PATH)
           if [ -z "$labels" ]; then
-              echo "Pull request does not have any labels assigned. lables: $labels"
+              echo "Pull request does not have any labels assigned."
               exit 1
           elif ! echo "$labels" | grep -qE "minor|major"; then
-              echo "Pull request must have at least one label, which should be 'minor' or 'major'. labels: $labels"
+              echo "Pull request must have at least one label, which should be 'minor' or 'major'."
               exit 1
           fi
