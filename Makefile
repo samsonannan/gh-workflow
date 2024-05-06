@@ -63,12 +63,6 @@ check-staticcheck:
 		# STATICCHECK_PATH=$$(GO111MODULE=on go get honnef.co/go/tools/cmd/staticcheck@latest 2>&1); \
 		apt install staticcheck
 		echo $(shell staticcheck --version)
-		if [ $$? -eq 0 ]; then \
-			echo "Staticcheck installed successfully at: $$STATICCHECK_PATH"; \
-		else \
-			echo "Error: Failed to install Staticcheck."; \
-			exit 1; \
-		fi \
 	fi
 
 generate: protos mocks
