@@ -8,14 +8,14 @@ BUILD_SCRIPT := ./scripts/build/build-all.sh
 
 DOCKER_RUNNING ?= $(shell docker ps >/dev/null 2>&1 && echo 1 || echo 0)
 
-GO_VERSION := $(shell go version | cut -d " " -f 3 | cut -d. -f2)
+GO_VERSION := $(shell go version)
 
 .PHONY: lint gofmt generate protos mocks
 
 test: lint gofmt
 	set -e; for dir in $(GO_MOD_DIRS); do \
-		if echo "$${dir}" | grep -q "./example" && [ "$(GO_VERSION)" = "19" ]; then \
-			echo "Skipping go test in $${dir} due to Go version 1.19 and dir contains ./example"; \
+		if echo "$${dir}" | grep -q "./example"; then \
+			echo "Skipping go test in $${dir} due to dir containing ./example"; \
 			continue; \
 		fi; \
 		echo "go test in $${dir}"; \
