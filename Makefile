@@ -55,6 +55,7 @@ generate: protos
 
 protos: check-scripts($(PROTO_SCRIPT))
 	@echo "Generating Protobuf files..."
+	@chmod +x $(PROTO_SCRIPT)
 	@$(PROTO_SCRIPT)
 
 mocks: check-scripts($(MOCK_SCRIPT))
