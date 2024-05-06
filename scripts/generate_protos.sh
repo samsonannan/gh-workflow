@@ -14,4 +14,6 @@ if ! command -v protoc-gen-go &> /dev/null; then
     echo "installed protoc-gen-go"
 fi
 
+cd /home/runner/go/gin
+ls -al
 protoc --version
