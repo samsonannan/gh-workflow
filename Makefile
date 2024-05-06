@@ -61,6 +61,7 @@ protos: check-scripts($(PROTO_SCRIPT))
 		sudo mv /home/runner/go/bin/protoc-gen-go-grpc /usr/bin/; \
 		which protoc; \
 		which protoc-gen-go-grpc; \
+		env; \
 		(protoc \
 			--proto_path=./protos \
 			--go_out=. \
