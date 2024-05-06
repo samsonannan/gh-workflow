@@ -81,7 +81,8 @@ go_mod_tidy:
 	done
 
 build-all:
-	ifeq ($(DOCKER_RUNNING), 1)
+	@ifeq ($(DOCKER_RUNNING),1)
+		@chmod +x $(BUILD_SCRIPT)
 		@$(BUILD_SCRIPT)
 	else
 		@echo "Docker not installed or running. Skipping build run."
