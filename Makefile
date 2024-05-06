@@ -60,7 +60,7 @@ protos: check-scripts($(PROTO_SCRIPT))
 
 mocks: check-scripts($(MOCK_SCRIPT))
 	@echo "Generating mocks..."
-	@chmod +x $(PROTO_SCRIPT)
+	@chmod +x $(MOCK_SCRIPT)
 	@$(MOCK_SCRIPT)
 
 check-scripts-%:
