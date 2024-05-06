@@ -58,8 +58,8 @@ protos: check-scripts($(PROTO_SCRIPT))
 		export PATH=$(PATH):$(GOPATH)/bin; \
 		go install google.golang.org/protobuf/cmd/protoc-gen-go@latest; \
 		go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest; \
-		protoc --version; \
-		protoc-gen-go-grpc --version; \
+		which protoc; \
+		which protoc-gen-go-grpc; \
 		(protoc \
 			--proto_path=./protos \
 			--go_out=. \
