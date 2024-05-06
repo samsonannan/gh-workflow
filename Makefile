@@ -13,7 +13,7 @@ GO_VERSION := $(shell go version | cut -d " " -f 3 | cut -d. -f2)
 .PHONY: lint gofmt generate protos mocks
 
 test: lint
-    set -e; for dir in $(GO_MOD_DIRS); do \
+	set -e; for dir in $(GO_MOD_DIRS); do \
 		if echo "$${dir}" | grep -q "./example" && [ "$(GO_VERSION)" = "19" ]; then \
 			echo "Skipping go test in $${dir} due to Go version 1.19 and dir contains ./example"; \
 			continue; \
