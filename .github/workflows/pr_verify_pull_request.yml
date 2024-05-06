@@ -43,6 +43,6 @@ jobs:
               echo "Pull request does not have any labels assigned. lables: $labels"
               exit 1
           elif ! echo "$labels" | grep -qE "minor|major"; then
-              echo "Pull request must have at least one label, which should be 'minor' or 'major'."
+              echo "Pull request must have at least one label, which should be 'minor' or 'major'. lables: $labels"
               exit 1
           fi
