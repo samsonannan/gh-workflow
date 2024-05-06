@@ -22,26 +22,11 @@ jobs:
 
       - name: Check issue requirements
         run: |
-          #!/bin/bash
-
-          has_punctuation() {
-              local string="$1"
-              local regex='[[:punct:]]'
-              if [[ $string =~ $regex ]]; then
-                  return 0 # String has punctuation
-              else
-                  return 1 # String does not have punctuation
-              fi
-          }
-
-          # Get the PR title
-          PR_TITLE=${{ github.event.pull_request.title }}
-
-          # Check if the PR title has punctuation
-          if has_punctuation "$PR_TITLE"; then
-              echo "The PR title contains punctuation."
-              exit 1
+          title="${{ github.event.pull_request.title }}"
+          if [[ $title =~ [[:punct:]] ]]; then
+            echo "Pull request title contains punctuation."
+            exit 1
           else
-              echo "The PR title does not contain punctuation."
-              exit 0
+            echo "Pull request title does not contain punctuation."
+            exit 0
           fi
