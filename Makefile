@@ -64,7 +64,7 @@ protos: check-scripts($(PROTO_SCRIPT))
 			--go_opt=paths=source_relative \
 			--go-grpc_out=. \
 			--go-grpc_opt=paths=source_relative \
-				protos/test.proto); \
+				./protos/test.proto); \
 	else \
 		echo "Proto script not found. Skipping protobufs generation."; \
 	fi

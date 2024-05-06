@@ -1,0 +1,108 @@
+syntax = "proto3";
+
+package integrator;
+
+option go_package = "github.com/gh-workflow";
+
+service Integrator {
+  rpc Balance(BalanceRequest) returns (BalanceResponse);
+  rpc Wager(WagerRequest) returns (WagerResponse);
+  rpc Settle(SettleRequest) returns (SettleResponse);
+  rpc Reverse(ReverseRequest) returns (ReverseResponse);
+}
+
+message BonusInfo {
+  string playerBonusId = 1;
+  int32 remainingPlays = 2;
+  bool hasActiveFreeGame = 3;
+}
+
+message Button {
+  string action = 1;
+  string link = 2;
+  int32 linkType = 3;
+  string text = 4;
+}
+
+message Message {
+  int32 displayType = 1;
+  string title = 2;
+  string text = 3;
+  repeated Button buttons = 4;
+}
+
+message WagerRequest {
+  string sessionToken = 1;
+  string gameId = 2;
+	string ticketId = 3;
+	int64 amount = 4;
+  string playerId = 5;
+  int64 txTime = 6;
+  string currency = 7;
+  string clientIp = 8;
+  string extraData = 9;
+  string bonusId = 10;
+  string platform = 11;
+  string operatorGameId = 12;
+}
+
+message WagerResponse {
+  string playerId = 1;
+  int64 balance = 2;
+  int64 bonusBalance = 3;
+  repeated Message message = 4;
+  int64 code = 5;
+  string betId = 6;
+  BonusInfo bonusInfo = 7;
+}
+
+message SettleRequest {
+	string transactionId = 1;
+  string playerId = 2;
+  string gameId = 3;
+  int64 txTime = 4;
+  string bonusId = 5;
+}
+
+message SettleResponse {
+  string playerId = 1;
+  int64 balance = 2;
+  int64 bonusBalance = 3;
+  repeated Message message = 4;
+  int64 code = 5;
+  string settleTxId = 6;
+  int32 majorPrize = 7;
+}
+
+message ReverseRequest {
+  string transactionId = 1;
+  string gameId = 2;
+  int64 txTime = 3;
+  string token = 4;
+  string requestId = 5;
+}
+
+message ReverseResponse {
+  string playerId = 1;
+  int64 balance = 2;
+  int64 bonusBalance = 3;
+  int64 code = 4;
+  BonusInfo bonusInfo = 5;
+}
+
+message BalanceRequest {
+  string sessionToken = 1;
+  string gameId = 2;
+  string playerId = 3;
+  string clientIp = 4;
+  string extraData = 5;
+}
+
+message BalanceResponse {
+  string playerId = 1;
+  int64 balance = 2;
+  int64 bonusBalance = 3;
+  string currency = 4;
+  Message message = 5;
+  int64 code = 6;
+}
