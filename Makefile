@@ -24,12 +24,12 @@ test: lint
 		fi; \
 		echo "go test in $${dir}"; \
 		(cd "$${dir}" && \
-		go mod tidy -compat=$(GO_VERSION) && \
-		go test && \
-		go test ./... -short -race && \
-		go test ./... -run=NONE -bench=. -benchmem && \
-		env GOOS=linux GOARCH=386 go test && \
-		go vet); \
+			go mod tidy -compat=$(GO_VERSION) && \
+			go test && \
+			go test ./... -short -race && \
+			go test ./... -run=NONE -bench=. -benchmem && \
+			env GOOS=linux GOARCH=386 go test && \
+			go vet); \
     done
 
 lint: check-lint gofmt staticcheck
