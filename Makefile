@@ -34,10 +34,10 @@ GO_VERSION := $(shell go version | cut -d " " -f 3 | cut -d. -f2)
 #     done
 
 lint: check-lint gofmt staticcheck
-    set -e; for dir in $(GO_MOD_DIRS); do \
+	set -e; for dir in $(GO_MOD_DIRS); do \
 		echo "Running golangci-lint in $${dir}"; \
 		golangci-lint run "$${dir}"; \
-    done
+	done
 
 check-lint:
     @if ! command -v $(LINT_TOOL) &> /dev/null; then \
