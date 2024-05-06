@@ -18,6 +18,7 @@ test: lint
 			echo "Skipping go test in $${dir} due to Go version 1.19 and dir contains ./example"; \
 			continue; \
 		fi; \
+		echo "go test in $${dir}"; \
 		if echo "$${dir}" | grep -q "./vendor"; then \
 			echo "Skipping go test in $${dir} because it is a vendor directory"; \
 			continue; \
