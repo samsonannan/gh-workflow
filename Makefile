@@ -10,30 +10,30 @@ DOCKER_RUNNING ?= $(shell docker ps >/dev/null 2>&1 && echo 1 || echo 0)
 
 GO_VERSION := $(shell go version | cut -d " " -f 3 | cut -d. -f2)
 
-.PHONY: lint gofmt staticcheck generate protos mocks
+.PHONY: lint gofmt generate protos mocks
 
-# test: lint
-#     set -e; for dir in $(GO_MOD_DIRS); do \
-# 		if echo "$${dir}" | grep -q "./example" && [ "$(GO_VERSION)" = "19" ]; then \
-# 			echo "Skipping go test in $${dir} due to Go version 1.19 and dir contains ./example"; \
-# 			continue; \
-# 		fi; \
-# 		echo "go test in $${dir}"; \
-# 		if echo "$${dir}" | grep -q "./vendor"; then \
-# 			echo "Skipping go test in $${dir} because it is a vendor directory"; \
-# 			continue; \
-# 		fi; \
-# 		echo "go test in $${dir}"; \
-# 		(cd "$${dir}" && \
-# 			go mod tidy -compat=$(GO_VERSION) && \
-# 			go test && \
-# 			go test ./... -short -race && \
-# 			go test ./... -run=NONE -bench=. -benchmem && \
-# 			env GOOS=linux GOARCH=386 go test && \
-# 			go vet); \
-#     done
+test: lint
+    set -e; for dir in $(GO_MOD_DIRS); do \
+		if echo "$${dir}" | grep -q "./example" && [ "$(GO_VERSION)" = "19" ]; then \
+			echo "Skipping go test in $${dir} due to Go version 1.19 and dir contains ./example"; \
+			continue; \
+		fi; \
+		echo "go test in $${dir}"; \
+		if echo "$${dir}" | grep -q "./vendor"; then \
+			echo "Skipping go test in $${dir} because it is a vendor directory"; \
+			continue; \
+		fi; \
+		echo "go test in $${dir}"; \
+		(cd "$${dir}" && \
+			go mod tidy -compat=$(GO_VERSION) && \
+			go test && \
+			go test ./... -short -race && \
+			go test ./... -run=NONE -bench=. -benchmem && \
+			env GOOS=linux GOARCH=386 go test && \
+			go vet); \
+    done
 
-lint: check-lint gofmt staticcheck
+lint: check-lint
 	set -e; for dir in $(GO_MOD_DIRS); do \
 		echo "Running golangci-lint in $${dir}"; \
 		golangci-lint run "$${dir}"; \
@@ -48,22 +48,6 @@ check-lint:
 gofmt:
 	@echo "Applying gofmt to all Go files..."
 	@gofmt -s -w $(shell find . -type f -name '*.go' -not -path './vendor/*')
-
-staticcheck: check-staticcheck
-	@echo "Running staticcheck..."
-	@echo $(GO_MOD_DIRS)
-	set -e; for dir in $(GO_MOD_DIRS); do \
-		(cd $${dir} && \
-		staticcheck ./... ); \
-	done
-
-check-staticcheck:
-	@if ! command -v staticcheck &> /dev/null; then \
-		echo "staticcheck is not installed. Installing..."; \
-		# STATICCHECK_PATH=$$(GO111MODULE=on go get honnef.co/go/tools/cmd/staticcheck@latest 2>&1); \
-		sudo apt install staticcheck; \
-		echo $(shell staticcheck --version); \
-	fi
 
 generate: protos mocks
 
