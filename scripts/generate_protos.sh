@@ -13,4 +13,4 @@ if ! command -v protoc-gen-go &> /dev/null; then
     echo "installed protoc-gen-go"
 fi
 
-which protoc
+echo $(shell protoc --version)
