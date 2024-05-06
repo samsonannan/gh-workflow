@@ -50,7 +50,7 @@ gofmt:
 	@echo "Applying gofmt to all Go files..."
 	@gofmt -s -w $(shell find . -type f -name '*.go' -not -path './vendor/*')
 
-generate: protos
+generate: protos mocks
 	@echo "Successfully generated all protobufs and mock files"
 
 protos: check-scripts($(PROTO_SCRIPT))
@@ -60,10 +60,10 @@ protos: check-scripts($(PROTO_SCRIPT))
 
 mocks: check-scripts($(MOCK_SCRIPT))
 	@echo "Generating mocks..."
+	@chmod +x $(PROTO_SCRIPT)
 	@$(MOCK_SCRIPT)
 
 check-scripts-%:
-	@echo $*
 	@if [ ! -f "$*" ]; then \
 		echo "Error: $* not found."; \
 		exit 1; \
