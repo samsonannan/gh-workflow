@@ -62,6 +62,12 @@ check-staticcheck:
 	@if ! command -v staticcheck &> /dev/null; then \
 		echo "staticcheck is not installed. Installing..."; \
 		GO111MODULE=on go install honnef.co/go/tools/cmd/staticcheck@latest; \
+		if [ $$? -eq 1 ]; then \
+			echo "Staticcheck installed successfully."; \
+		else \
+			echo "Error: Failed to install Staticcheck."; \
+			exit 1; \
+		fi \
 	fi
 
 generate: protos mocks
