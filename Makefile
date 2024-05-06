@@ -18,12 +18,10 @@ test: lint gofmt
 			echo "Skipping go test in $${dir} due to dir containing ./example"; \
 			continue; \
 		fi; \
-		echo "go test in $${dir}"; \
 		if echo "$${dir}" | grep -q "./vendor"; then \
 			echo "Skipping go test in $${dir} because it is a vendor directory"; \
 			continue; \
 		fi; \
-		echo "go test in $${dir}"; \
 		(cd "$${dir}" && \
 			go mod tidy -compat=$(GO_VERSION) && \
 			go test -v ./... && \
@@ -43,7 +41,7 @@ lint: check-lint
 check-lint:
 	@if ! command -v $(LINT_TOOL) &> /dev/null; then \
 		echo "golangci-lint is not installed. Installing..."; \
-		GO111MODULE=on go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest; \
+		go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest; \
     fi
 
 gofmt:
