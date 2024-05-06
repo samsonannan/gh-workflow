@@ -53,12 +53,14 @@ generate: protos mocks
 
 protos: check-scripts($(PROTO_SCRIPT))
 	@echo "Generating Protobuf files..."
-	@if [ -f "$(PROTO_SCRIPT)" ]; then \
-		chmod +x $(PROTO_SCRIPT); \
-		$(PROTO_SCRIPT); \
-	else \
-		echo "Proto script not found. Skipping protobufs generation."; \
-	fi
+	go install google.golang.org/protobuf/cmd/protoc-gen-go@latest; \
+	which protoc
+	# @if [ -f "$(PROTO_SCRIPT)" ]; then \
+	# 	chmod +x $(PROTO_SCRIPT); \
+	# 	$(PROTO_SCRIPT); \
+	# else \
+	# 	echo "Proto script not found. Skipping protobufs generation."; \
+	# fi
 
 mocks: check-scripts($(MOCK_SCRIPT))
 	@echo "Generating mocks..."
