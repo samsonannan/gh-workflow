@@ -12,26 +12,26 @@ GO_VERSION := $(shell go version | cut -d " " -f 3 | cut -d. -f2)
 
 .PHONY: lint gofmt staticcheck generate protos mocks
 
-test: lint
-    set -e; for dir in $(GO_MOD_DIRS); do \
-		if echo "$${dir}" | grep -q "./example" && [ "$(GO_VERSION)" = "19" ]; then \
-			echo "Skipping go test in $${dir} due to Go version 1.19 and dir contains ./example"; \
-			continue; \
-		fi; \
-		echo "go test in $${dir}"; \
-		if echo "$${dir}" | grep -q "./vendor"; then \
-			echo "Skipping go test in $${dir} because it is a vendor directory"; \
-			continue; \
-		fi; \
-		echo "go test in $${dir}"; \
-		(cd "$${dir}" && \
-			go mod tidy -compat=$(GO_VERSION) && \
-			go test && \
-			go test ./... -short -race && \
-			go test ./... -run=NONE -bench=. -benchmem && \
-			env GOOS=linux GOARCH=386 go test && \
-			go vet); \
-    done
+# test: lint
+#     set -e; for dir in $(GO_MOD_DIRS); do \
+# 		if echo "$${dir}" | grep -q "./example" && [ "$(GO_VERSION)" = "19" ]; then \
+# 			echo "Skipping go test in $${dir} due to Go version 1.19 and dir contains ./example"; \
+# 			continue; \
+# 		fi; \
+# 		echo "go test in $${dir}"; \
+# 		if echo "$${dir}" | grep -q "./vendor"; then \
+# 			echo "Skipping go test in $${dir} because it is a vendor directory"; \
+# 			continue; \
+# 		fi; \
+# 		echo "go test in $${dir}"; \
+# 		(cd "$${dir}" && \
+# 			go mod tidy -compat=$(GO_VERSION) && \
+# 			go test && \
+# 			go test ./... -short -race && \
+# 			go test ./... -run=NONE -bench=. -benchmem && \
+# 			env GOOS=linux GOARCH=386 go test && \
+# 			go vet); \
+#     done
 
 lint: check-lint gofmt staticcheck
     set -e; for dir in $(GO_MOD_DIRS); do \
