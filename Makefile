@@ -14,28 +14,28 @@ GO_VERSION := $(shell go version | cut -d " " -f 3 | cut -d. -f2)
 
 test: lint
     set -e; for dir in $(GO_MOD_DIRS); do \
-	if echo "$${dir}" | grep -q "./example" && [ "$(GO_VERSION)" = "19" ]; then \
-		echo "Skipping go test in $${dir} due to Go version 1.19 and dir contains ./example"; \
-		continue; \
-	fi; \
-	if echo "$${dir}" | grep -q "./vendor"; then \
-		echo "Skipping go test in $${dir} because it is a vendor directory"; \
-		continue; \
-	fi; \
-    echo "go test in $${dir}"; \
-    (cd "$${dir}" && \
-        go mod tidy -compat=$(GO_VERSION) && \
-        go test && \
-        go test ./... -short -race && \
-        go test ./... -run=NONE -bench=. -benchmem && \
-        env GOOS=linux GOARCH=386 go test && \
-        go vet); \
+		if echo "$${dir}" | grep -q "./example" && [ "$(GO_VERSION)" = "19" ]; then \
+			echo "Skipping go test in $${dir} due to Go version 1.19 and dir contains ./example"; \
+			continue; \
+		fi; \
+		if echo "$${dir}" | grep -q "./vendor"; then \
+			echo "Skipping go test in $${dir} because it is a vendor directory"; \
+			continue; \
+		fi; \
+		echo "go test in $${dir}"; \
+		(cd "$${dir}" && \
+			go mod tidy -compat=$(GO_VERSION) && \
+			go test && \
+			go test ./... -short -race && \
+			go test ./... -run=NONE -bench=. -benchmem && \
+			env GOOS=linux GOARCH=386 go test && \
+			go vet); \
     done
 
 lint: check-lint gofmt staticcheck
     set -e; for dir in $(GO_MOD_DIRS); do \
-    echo "Running golangci-lint in $${dir}"; \
-    golangci-lint run "$${dir}"; \
+		echo "Running golangci-lint in $${dir}"; \
+		golangci-lint run "$${dir}"; \
     done
 
 check-lint:
@@ -73,10 +73,10 @@ bench: testdeps
 
 go_mod_tidy:
 	set -e; for dir in $(GO_MOD_DIRS); do \
-	echo "go mod tidy in $${dir}"; \
-	(cd "$${dir}" && \
-	go get -u ./... && \
-	go mod tidy -compat=$(GO_VERSION)); \
+		echo "go mod tidy in $${dir}"; \
+		(cd "$${dir}" && \
+		go get -u ./... && \
+		go mod tidy -compat=$(GO_VERSION)); \
 	done
 
 build-all:
