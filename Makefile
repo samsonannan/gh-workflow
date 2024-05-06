@@ -61,10 +61,10 @@ mocks: check-scripts($(MOCK_SCRIPT))
 	@echo "Generating mocks..."
 	@$(MOCK_SCRIPT)
 
-check-scripts(%):
-	@echo $($*)
-	@if [ ! -f "$($*)" ]; then \
-		echo "Error: $($*) not found."; \
+check-scripts-%:
+	@echo $*
+	@if [ ! -f "$*" ]; then \
+		echo "Error: $* not found."; \
 		exit 1; \
 	fi
 
