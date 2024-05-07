@@ -40,7 +40,7 @@ jobs:
 
       - name: Check PR Labels
         run: |
-          apt-get install jq
+          sudo apt-get install jq
           labels=$(jq --raw-output .pull_request.labels[].name $GITHUB_EVENT_PATH)
           if [ -z "$labels" ]; then
               echo "Pull request does not have any labels assigned."
