@@ -1,6 +1,6 @@
 GO_MOD_DIRS := $(shell find . -type f -name 'go.mod' -exec dirname {} \; | grep -v './vendor' | sort)
 
-LINT_TOOL := golangci-lint
+LINT_TOOL := golint
 
 MOCK_SCRIPT := ./scripts/generate_mocks.sh
 PROTO_SCRIPT := ./scripts/generate_protos.sh
@@ -35,13 +35,13 @@ lint: check-lint
 	set -e; for dir in $(GO_MOD_DIRS); do \
 		echo "Running golangci-lint in $${dir}"; \
 		(cd "$${dir}" && \
-		golangci-lint run ./...); \
+		golint ./...); \
 	done
 
 check-lint:
 	@if ! command -v $(LINT_TOOL) &> /dev/null; then \
 		echo "golangci-lint is not installed. Installing..."; \
-		go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest; \
+		go install golang.org/x/lint/golint@latest; \
     fi
 
 gofmt:
@@ -57,8 +57,6 @@ protos: check-scripts($(PROTO_SCRIPT))
 		sudo apt install -y protobuf-compiler; \
 		go install google.golang.org/protobuf/cmd/protoc-gen-go@latest; \
 		go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest; \
-		# sudo mv /home/runner/go/bin/protoc-gen-go /usr/bin/; \
-		# sudo mv /home/runner/go/bin/protoc-gen-go-grpc /usr/bin/; \
 		(protoc \
 			--proto_path=./protos \
 			--go_out=. \
