@@ -12,14 +12,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: "3.x"
-
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-
       - name: Check PR Header
         run: |
           title="${{ github.event.pull_request.title }}"
@@ -48,6 +40,7 @@ jobs:
 
       - name: Check PR Labels
         run: |
+          apt-get install jq
           labels=$(jq --raw-output .pull_request.labels[].name $GITHUB_EVENT_PATH)
           if [ -z "$labels" ]; then
               echo "Pull request does not have any labels assigned."
