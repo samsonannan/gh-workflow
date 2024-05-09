@@ -14,14 +14,7 @@ GO_VERSION := $(shell echo $(GOVERSION) | cut -d '.' -f 1.2)
 
 test: lint gofmt
 	set -e; for dir in $(GO_MOD_DIRS); do \
-		if echo "$${dir}" | grep -q "./example"; then \
-			echo "Skipping go test in $${dir} due to dir containing ./example"; \
-			continue; \
-		fi; \
-		if echo "$${dir}" | grep -q "./vendor"; then \
-			echo "Skipping go test in $${dir} because it is a vendor directory"; \
-			continue; \
-		fi; \
+		echo "Running go test in $${dir}"; \
 		(cd "$${dir}" && \
 			go mod tidy -compat=$(GO_VERSION) && \
 			go test -v ./... && \
