@@ -50,7 +50,12 @@ jobs:
               exit 1
           fi
 
-      - name: create pull request
-        run: gh pr create -B base_branch -H branch_to_merge --title 'Merge branch_to_merge into base_branch' --body 'Created by Github action'
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: Update image tag to version
+          branch: update-image-tag-version
+          title: Update image tag to version
+          body: This PR updates the image tag to `version`.
+          base: main
