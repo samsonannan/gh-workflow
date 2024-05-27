@@ -1,0 +1,61 @@
+name: Verify PR Requirements
+on:
+  pull_request:
+    types: [edited, synchronize, labeled, opened, reopened]
+
+jobs:
+  check-pr-requirements:
+    name: Ensure PR Meets Requirements
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Check PR Header
+        run: |
+          title="${{ github.event.pull_request.title }}"
+          if [[ $title =~ [[:punct:]] ]]; then
+             echo "Pull request title contains punctuation."
+             exit 1
+          fi
+
+      - name: Lint PR Header
+        uses: morrisoncole/pr-lint-action@51f3cfabaf5d46f94e54524214e45685f0401b2a
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          title-regex: "^[A-Z]\\w+[^s] .*[^.?!,\\-;:]$"
+          on-failed-regex-fail-action: true
+          on-failed-regex-create-review: false
+          on-failed-regex-request-changes: false
+          on-failed-regex-comment: "PR titles must start with a capital letter, not end the first word in 's' (ideally the imperative, present tense!), and not end with punctuation."
+
+      - name: Check PR Assignee
+        run: |
+          assignee="${{ github.event.pull_request.assignee }}"
+          if [ -z "$assignee" ]; then
+              echo "Pull request is not assigned to anyone."
+              exit 1
+          fi
+
+      - name: Check PR Labels
+        run: |
+          sudo apt-get install jq
+          labels=$(jq --raw-output .pull_request.labels[].name $GITHUB_EVENT_PATH)
+          if [ -z "$labels" ]; then
+              echo "Pull request does not have any labels assigned."
+              exit 1
+          elif ! echo "$labels" | grep -qE "minor|major"; then
+              echo "Pull request must have at least one label, which should be 'minor' or 'major'."
+              exit 1
+          fi
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: Update image tag to version
+          branch: update-image-tag-version
+          title: Update image tag to version
+          body: This PR updates the image tag to `version`.
+          base: main

@@ -1,0 +1,40 @@
+name: Build
+
+on:
+  pull_request:
+    branches: ["*"]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        go-version: [1.21.x, 1.22.x]
+
+    steps:
+      - name: Set up ${{ matrix.go-version }}
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.go-version }}
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Generate
+        run:
+          # make generate
+
+      - name: Test
+        env:
+          GOVERSION: ${{ matrix.go-version }}
+        run:
+          # make test
+
+      - name: Build
+        run:
+          # make build-all
