@@ -3,11 +3,11 @@ package main
 import (
 	"fmt"
 
-	uuid "github.com/samsonannan/utili/pkg/model"
+	uuid "github.com/samsonannan/addon/pkg/models"
 )
 
 func main() {
 	// u := model.UserModel{Name: "Gerald", Email: "gerald@yahoo.com"}
-	u := uuid.PhoneModel{Phone: "0204248210", Address: "GA-3480-1834"}
+	u := uuid.UserModel{Name: "Gerald", Email: "geramd@yahoo.com"}
 	fmt.Printf("%+v", u)
 }
